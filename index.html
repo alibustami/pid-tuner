@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Systematic Evaluation of Initial States and Exploration–Exploitation Strategies in PID Auto-Tuning: A Framework-Driven Approach Applied on Mobile Robots.">
+  <meta name="keywords" content="PID Tuning, Mobile Robots, Bayesian Optimization, Differential Evolution, Exploration-Exploitation, Auto-tuning Framework">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PID Auto-Tuning Framework</title>
+
+  <!-- Google Analytics – _remove or replace_ -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <!-- Google Fonts & 3rd‑party styles -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg"> -->
+
+  <!-- Ensure images keep their natural aspect ratio -->
+  <style>
+    figure.image {
+      margin: 1rem 0;
+    }
+    figure.image img {
+      width: auto;
+      height: 100%;
+    }
+  </style>
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- ╔═══════════╗ -->
+<!-- ║ NAVIGATION ║ -->
+<!-- ╚═══════════╝ -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="navMenu"></div>
+</nav>
+
+<!-- ╔═══════════════════╗ -->
+<!-- ║ TITLE & AUTHORSHIP ║ -->
+<!-- ╚═══════════════════╝ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Systematic Evaluation of Initial States and Exploration–Exploitation Strategies in PID Auto-Tuning:<br>A Framework‑Driven Approach Applied on Mobile Robots</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zaidghazal.github.io/">Zaid Ghazal</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://alibustami.github.io/">Ali Al-Bustami</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=ar8di_MAAAAJ&hl=en">Khouloud Gaaloul</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://jrkwon.com/">Jaerock Kwon</a><sup>1</sup>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors"><span class="author-block"><sup>1</sup>University of Michigan–Dearborn</span></div>
+
+          <div class="column has-text-centered pt-4">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2505.03159" target="_blank" class="external-link button is-normal is-rounded is-dark" rel="noopener">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper&nbsp;(PDF)</span>
+                </a>
+              </span>
+
+              <!-- arXiv link – replace arXiv ID once available -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2505.03159" target="_blank" class="external-link button is-normal is-rounded is-dark" rel="noopener">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- GitHub remains unchanged -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/your‑repo" target="_blank" class="external-link button is-normal is-rounded is-dark" rel="noopener">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>GitHub</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block"><a href="#" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fab fa-github"></i></span><span>GitHub</span></a></span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════╗ -->
+<!-- ║   MAIN BODY   ║ -->
+<!-- ╚═══════════════╝ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths content has-text-justified">
+
+        <!-- ABSTRACT -->
+        <h2 class="title is-3">Abstract</h2>
+        <p>PID controllers are ubiquitous in robotics for their simplicity and effectiveness. While Bayesian Optimization (BO) and Differential Evolution (DE) automate gain selection, the influence of <em>initial PID gains</em> and the <em>exploration–exploitation (E–E) balance</em> remains poorly understood. We propose a unified framework that systematically crosses multiple initial-state hypotheses with three E–E strategies &mdash; balanced, exploration‑heavy, and exploitation‑heavy &mdash; and evaluates them on two mobile‑robot platforms. Results demonstrate that a balanced E–E policy seeded with well‑chosen initial gains produces the fastest convergence (≤1.1&nbsp;s settling) and 100&nbsp;% reliability, while DE offers unmatched robustness across all scenarios.</p>
+        <hr>
+
+        <!-- FRAMEWORK OVERVIEW -->
+        <h2 class="title is-3">Framework Overview</h2>
+        <figure class="image">
+          <img src="./assets/framework.png" alt="Block diagram of the proposed PID auto‑tuning framework showing Configurations Generator and Trials Executer modules.">
+          <figcaption>Figure&nbsp;1. Framework architecture illustrating how initial PID states and exploration–exploitation levels are paired before tuning with BO / DE.</figcaption>
+        </figure>
+        <p>The framework consists of two cooperating modules:</p>
+        <ol>
+          <li><strong>Configurations Generator</strong> &mdash; forms the Cartesian product of predefined initial PID states and E–E levels, yielding <code>6</code> unique configurations per optimizer.</li>
+          <li><strong>Trials Executer</strong> &mdash; sequentially runs each configuration on the target robot, closes the optimization loop, and logs performance metrics.</li>
+        </ol>
+        <hr>
+
+        <!-- METHOD -->
+        <h2 class="title is-3">Methodology</h2>
+        <figure class="image">
+          <img src="./assets/workflow.png" alt="Workflow of the Trials Executer block.">
+          <figcaption>Figure&nbsp;2. Trials Executer workflow for one configuration (trial).</figcaption>
+        </figure>
+
+        <h3 class="title is-4">Algorithm&nbsp;1 – Trials Executer Pseudocode</h3>
+        <pre><code>// Inputs: config, optimizer_type (BO / DE), ST_threshold, constraints
+initialize optimizer(config.initial_state)
+repeat
+    (Kp, Ki, Kd) ← optimizer.suggest()
+    (ST, RT, OS) ← run_rotation(Kp, Ki, Kd)   // Execute 90° turn
+    if (RT, OS) within constraints then
+        optimizer.update(ST)                  // reward
+    else
+        optimizer.penalize()                  // discourage
+until ST ≤ ST_threshold or max_iter reached
+return best (Kp, Ki, Kd), ST</code></pre>
+
+        <p>The executor stops early when the settling‑time (ST) objective is achieved, drastically reducing iteration count for promising configurations.</p>
+
+        <hr>
+
+        <!-- RESULTS -->
+        <h2 class="title is-3">Experimental Results</h2>
+        <p>We ran <strong>24</strong> distinct trials (2 initial states × 3 E–E levels × 2 optimizers) on each robot, repeating each trial 10 times for statistical significance. Table&nbsp;1 summarises the best‑run metrics; Figures&nbsp;3 &amp; 4 visualise the settling‑time distributions.</p>
+
+        <!-- TABLE I -->
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Robot</th><th>E-E Config</th><th>Opt.</th><th>ST (ms)</th><th>Conv&nbsp;%</th><th>RT (ms)</th><th>OS&nbsp;%</th><th>Iter.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- rows omitted for brevity -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- DISTRIBUTION FIGURES -->
+        <div class="columns is-multiline is-centered">
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./assets/odd_settling_time.png" alt="KDE of settling times – Omnidirectional robot.">
+              <figcaption>Figure&nbsp;3. Settling‑time KDEs for omnidirectional robot across E–E levels (BO in blue, DE in red).</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure class="image">
+              <img src="./assets/dd_settling_time.png" alt="KDE of settling times – Differential‑drive robot.">
+              <figcaption>Figure&nbsp;4. Settling‑time KDEs for differential‑drive robot across E–E levels.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- DISCUSSION / RQs -->
+        <h2 class="title is-3">Discussion</h2>
+        <h3 class="title is-4">RQ1 – Exploration vs. Exploitation</h3>
+        <ul>
+          <li>A balanced policy consistently delivered the fastest settling times and 100&nbsp;% convergence on both platforms.</li>
+          <li>Exploration‑heavy settings occasionally discovered lower‑cost regions but required extra iterations to refine.</li>
+          <li>Exploitation‑heavy settings favoured DE, which capitalised on good initial gains without global search overhead.</li>
+        </ul>
+        <h3 class="title is-4">RQ2 – Impact of Initial Gains</h3>
+        <ul>
+          <li>Initial State&nbsp;1 (high P, low I/D) accelerated convergence on the differential‑drive robot by ~3&nbsp;% relative to State&nbsp;2.</li>
+          <li>The omnidirectional platform proved less sensitive to initial gains, owing to its holonomic kinematics.</li>
+        </ul>
+        <h3 class="title is-4">RQ3 – BO vs DE</h3>
+        <ul>
+          <li>BO reached sub‑1.2&nbsp;s settling in as few as <em>three</em> iterations but exhibited occasional non‑convergence when exploration was restricted.</li>
+          <li>DE achieved perfect reliability across 240 runs, albeit sometimes requiring &gt;50 iterations to equal BO’s best times.</li>
+        </ul>
+
+        <hr>
+
+        <!-- CONCLUSION -->
+        <h2 class="title is-3">Conclusion</h2>
+        <p>This study underscores the intertwined roles of initial PID gains and exploration‑exploitation strategy in auto‑tuning. A deliberately balanced search seeded with informed gains yields rapid, reliable performance, while DE remains a fail‑safe optimiser under tough conditions. Future work will fuse BO’s sample‑efficiency with DE’s robustness and extend the framework to multi‑objective tasks.</p>
+
+        <!-- ACKNOWLEDGEMENTS -->
+        <hr>
+        <h2 class="title is-3">Acknowledgements</h2>
+        <p>This work was supported in part by the National Science Foundation (NSF) CRII: CPS program under grant number 2347294.</p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═════════╗ -->
+<!-- ║  FOOTER ║ -->
+<!-- ╚═════════╝ -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://arxiv.org/pdf/2505.03159" target="_blank" rel="noopener">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <!-- <a class="icon-link" href="https://github.com/your-repo" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a> -->
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution‑ShareAlike 4.0 International License</a>.</p>
+          <p>Feel free to reuse this layout; just credit the authors and remove the analytics snippet if undesired.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
