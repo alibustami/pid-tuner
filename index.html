@@ -168,13 +168,54 @@ return best (Kp, Ki, Kd), ST</code></pre>
         <!-- TABLE I -->
         <div class="table-container">
           <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <caption class="has-text-weight-semibold">Table&nbsp;1. Experimental Results</caption>
             <thead>
               <tr>
-                <th>Robot</th><th>E-E Config</th><th>Opt.</th><th>ST (ms)</th><th>Conv&nbsp;%</th><th>RT (ms)</th><th>OS&nbsp;%</th><th>Iter.</th>
+                <th>Robot Type</th>
+                <th>E–E Config</th>
+                <th>Optimizer</th>
+                <th>Settling&nbsp;Time (ms)</th>
+                <th>Convergence&nbsp;%</th>
+                <th>Rise&nbsp;Time (ms)</th>
+                <th>Overshoot&nbsp;%</th>
+                <th>Iterations</th>
               </tr>
             </thead>
             <tbody>
-              <!-- rows omitted for brevity -->
+              <!-- Initial State 1 header -->
+              <tr><td colspan="8" class="has-text-centered has-text-weight-semibold">Initial&nbsp;State&nbsp;1</td></tr>
+              <!-- Balanced rows -->
+              <tr><td>Differential Drive</td><td>Balanced</td><td>BO</td><td>1118</td><td>100%</td><td>421</td><td>32.95</td><td>3</td></tr>
+              <tr><td>Differential Drive</td><td>Balanced</td><td>DE</td><td>1406</td><td>100%</td><td>631</td><td>27.83</td><td>16</td></tr>
+              <tr><td>Omnidirectional</td><td>Balanced</td><td>BO</td><td>1225</td><td>90%</td><td>553</td><td>32.48</td><td>13</td></tr>
+              <tr><td>Omnidirectional</td><td>Balanced</td><td>DE</td><td>1535</td><td>100%</td><td>658</td><td>16.46</td><td>16</td></tr>
+              <!-- Exploration‑Focused rows -->
+              <tr><td>Differential Drive</td><td>Exploration‑Focused</td><td>BO</td><td>1378</td><td>100%</td><td>432</td><td>30.12</td><td>11</td></tr>
+              <tr><td>Differential Drive</td><td>Exploration‑Focused</td><td>DE</td><td>1418</td><td>100%</td><td>452</td><td>24.47</td><td>16</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploration‑Focused</td><td>BO</td><td>1514</td><td>100%</td><td>553</td><td>20.45</td><td>15</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploration‑Focused</td><td>DE</td><td>1552</td><td>100%</td><td>553</td><td>29.40</td><td>66</td></tr>
+              <!-- Exploitation‑Focused rows -->
+              <tr><td>Differential Drive</td><td>Exploitation‑Focused</td><td>BO</td><td>1667</td><td>100%</td><td>492</td><td>32.88</td><td>19</td></tr>
+              <tr><td>Differential Drive</td><td>Exploitation‑Focused</td><td>DE</td><td>1417</td><td>100%</td><td>519</td><td>31.11</td><td>31</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploitation‑Focused</td><td>BO</td><td>1503</td><td>80%</td><td>553</td><td>20.45</td><td>15</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploitation‑Focused</td><td>DE</td><td>1522</td><td>100%</td><td>568</td><td>29.09</td><td>61</td></tr>
+              <!-- Initial State 2 header -->
+              <tr><td colspan="8" class="has-text-centered has-text-weight-semibold">Initial&nbsp;State&nbsp;2</td></tr>
+              <!-- Balanced rows -->
+              <tr><td>Differential Drive</td><td>Balanced</td><td>BO</td><td>1151</td><td>90%</td><td>565</td><td>27.69</td><td>10</td></tr>
+              <tr><td>Differential Drive</td><td>Balanced</td><td>DE</td><td>1451</td><td>100%</td><td>485</td><td>29.98</td><td>31</td></tr>
+              <tr><td>Omnidirectional</td><td>Balanced</td><td>BO</td><td>1246</td><td>100%</td><td>590</td><td>33.21</td><td>9</td></tr>
+              <tr><td>Omnidirectional</td><td>Balanced</td><td>DE</td><td>1479</td><td>100%</td><td>538</td><td>19.38</td><td>26</td></tr>
+              <!-- Exploration‑Focused rows -->
+              <tr><td>Differential Drive</td><td>Exploration‑Focused</td><td>BO</td><td>1421</td><td>100%</td><td>517</td><td>26.78</td><td>15</td></tr>
+              <tr><td>Differential Drive</td><td>Exploration‑Focused</td><td>DE</td><td>1488</td><td>100%</td><td>487</td><td>27.88</td><td>16</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploration‑Focused</td><td>BO</td><td>1420</td><td>100%</td><td>553</td><td>28.20</td><td>17</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploration‑Focused</td><td>DE</td><td>1501</td><td>100%</td><td>553</td><td>32.80</td><td>17</td></tr>
+              <!-- Exploitation‑Focused rows -->
+              <tr><td>Differential Drive</td><td>Exploitation‑Focused</td><td>BO</td><td>1609</td><td>90%</td><td>534</td><td>33.06</td><td>17</td></tr>
+              <tr><td>Differential Drive</td><td>Exploitation‑Focused</td><td>DE</td><td>1319</td><td>100%</td><td>648</td><td>29.31</td><td>11</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploitation‑Focused</td><td>BO</td><td>1598</td><td>80%</td><td>553</td><td>28.20</td><td>17</td></tr>
+              <tr><td>Omnidirectional</td><td>Exploitation‑Focused</td><td>DE</td><td>1654</td><td>100%</td><td>533</td><td>28.41</td><td>56</td></tr>
             </tbody>
           </table>
         </div>
